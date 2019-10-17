@@ -13,7 +13,7 @@ class MapCar extends React.Component< IProps, IState> {
     public render() {
         return (
             <div className="app">
-                map
+                mapCar
             </div>
         );
     }

@@ -9,11 +9,11 @@ interface IState {
     input: string;
 }
 
-class MapCar extends React.Component< IProps, IState> {
+class Wherefrom extends React.Component< IProps, IState> {
     public render() {
         return (
             <div className="app">
-                map
+                selectCar
             </div>
         );
     }
@@ -21,4 +21,4 @@ class MapCar extends React.Component< IProps, IState> {
 
 declare let module: object;
 
-export default hot(module)(MapCar);
+export default hot(module)(Wherefrom);

@@ -9,7 +9,7 @@ interface IState {
     input: string;
 }
 
-class MapCar extends React.Component< IProps, IState> {
+class SelectCar extends React.Component< IProps, IState> {
     public render() {
         return (
             <div className="app">
@@ -21,4 +21,4 @@ class MapCar extends React.Component< IProps, IState> {
 
 declare let module: object;
 
-export default hot(module)(MapCar);
+export default hot(module)(SelectCar);
