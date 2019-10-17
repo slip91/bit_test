@@ -1,6 +1,5 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
 import MapCar from "./mapCar/MapCar";
 
 const reactLogo = require("./../assets/img/react_logo.svg");
@@ -19,17 +18,6 @@ class App extends React.Component< IProps, IState> {
         coord: [],
         ymaps: {},
         input: "Борисоглебский переулок 10с1",
-    }
-
-
-
-    private onMapClick(event) {
-        this.getAddress(event.get("coords"));
-        this.setState(state => {
-            return {
-                coord: event.get("coords"),
-            };
-        });
     }
 
     private getAddressStr(addrStr) {
@@ -65,21 +53,6 @@ class App extends React.Component< IProps, IState> {
                 <MapCar></MapCar>
 
                 <input value={this.state.input} onChange={this.handleChange.bind(this)} />
-                <YMaps query ={{
-                    apikey: "75297380-b1bd-4ffc-a589-654d79516174",
-                }}>
-                    <Map
-                        defaultState={{ center: [55.751574, 37.573856], zoom: 11 }}
-                        modules={["geolocation", "geocode"]}
-                        apikey = "75297380-b1bd-4ffc-a589-654d79516174"
-                        onLoad={(ymaps) => {this.state.ymaps = ymaps;}}
-
-                        onClick={this.onMapClick.bind(this)} >
-                            <Placemark
-                                geometry={this.state.coord}
-                            />
-                    </Map>
-                </YMaps>
             </div>
         );
     }
