@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { mapReducer } from "./map/reducers";
+import mapReducer from "./counters/reducer";
 
 const rootReducer = combineReducers({
     map: mapReducer,
@@ -10,8 +10,6 @@ const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>;
 
 export default function configureStore() {
-    // const middlewares = [thunkMiddleware];
-    // const middleWareEnhancer = applyMiddleware(...middlewares);
     const store = createStore(
         rootReducer,
         composeWithDevTools(),
