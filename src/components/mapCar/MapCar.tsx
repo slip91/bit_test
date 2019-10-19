@@ -3,10 +3,14 @@ import { hot } from "react-hot-loader";
 import { connect } from "react-redux";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import { bindActionCreators, Dispatch, ActionCreatorsMapObject } from "redux";
+import {isBoolean} from "util";
 import {AppState} from "../../store/index";
-import { countersActions, countersSelectors } from "../../store/counters";
+import { orderActions, orderSelectors } from "../../store/order";
 
-interface IProps {}
+interface IProps {
+    onSetMap: any;
+    onGetAddress: any;
+}
 
 interface IState {
     coord: [];
@@ -22,14 +26,36 @@ class MapCar extends React.Component< IProps, IState> {
     }
 
     private onMapClick(event) {
+        console.log("onMapClick");
+        this.props.onGetAddress().then((status: any) => {
+            console.log(status);
+        };
         // this.getAddress(event.get("coords"));
-        console.log(this.props.map);
+        // this.getAddress(event.get("coords"));
+        // this.setState((state) => {
+        //     return {
+        //         coord: event.get("coords"),
+        //     };
+        // });
+    }
+    private getAddress(coords) {
+        this.props.map.geocode(coords).then((res) => {
+            // console.log(res);
+            console.log( res.geoObjects.get(0).getLocalities()[0]);
+            console.log( res.geoObjects.get(0).getThoroughfare());
+            console.log( res.geoObjects.get(0).getPremiseNumber());
 
-        this.setState(state => {
-            return {
-                coord: event.get("coords"),
-            };
+            console.log("-----2----------");
         });
+    }
+
+    private getAddressStr(addrStr) {
+        this.state.ymaps.geocode(addrStr).then((res) => {
+
+            console.log( res.geoObjects.get(0).getLocalities()[0]);
+            console.log( res.geoObjects.get(0).getThoroughfare());
+            console.log( res.geoObjects.get(0).getPremiseNumber());
+        }
     }
 
     render() {
@@ -59,14 +85,14 @@ class MapCar extends React.Component< IProps, IState> {
 declare let module: object;
 
 const dispatchProps = {
-    onIncrement: countersActions.increment,
-    onSetMap: countersActions.setMap,
+    onIncrement: orderActions.increment,
+    onSetMap: orderActions.setMap,
 };
 
 export default connect(
     (state: AppState) => ({
-        counter: state.map.reduxCounter,
-        map: state.map.reduxMap,
+        // counter: state.map.reduxCounter,
+        // map: state.map.reduxMap,
     }), dispatchProps)(MapCar);
 
 // export default hot(module)(MapCar);

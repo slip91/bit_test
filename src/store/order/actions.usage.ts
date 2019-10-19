@@ -1,5 +1,5 @@
 import store from '../../store';
-import { countersActions as counter } from '../counters';
+import { countersActions as counter } from './';
 
 // store.dispatch(counter.increment(1)); // Error: Expected 0 arguments, but got 1.
 store.dispatch(counter.increment()); // OK
