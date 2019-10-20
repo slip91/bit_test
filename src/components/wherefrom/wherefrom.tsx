@@ -4,31 +4,22 @@ import {connect} from "react-redux";
 import {AppState} from "../../store";
 import {orderActions} from "../../store/order";
 
-interface IProps {}
-
-interface IState {
-    input: string;
+interface IProps {
+    findUserByStr: any;
+    userAddress: any;
 }
 
-class Wherefrom extends React.Component< IProps, IState> {
-    public state: IState = {
-        input: "Борисоглебский переулок 10с1",
-    }
+// interface IState {}
 
+class Wherefrom extends React.Component< IProps, {}> {
     public handleChange(event) {
-        this.props.onSetAddressFromStr(event.target.value);
-        this.props.asyncIncrement(event.target.value);
-
-        console.log("handleChange");
-        console.log(this.props.userAddress);
-
-        this.setState({input: event.target.value});
+        this.props.findUserByStr(event.target.value);
     }
 
     public render() {
         return (
             <div className="app">
-                <input value={this.state.input} onChange={this.handleChange.bind(this)} />
+                <input value={this.props.userAddress} onChange={this.handleChange.bind(this)}/>
             </div>
         );
     }
@@ -37,8 +28,8 @@ class Wherefrom extends React.Component< IProps, IState> {
 declare let module: object;
 
 const dispatchProps = {
+    findUserByStr: orderActions.findUserByStr,
     onSetAddressFromStr: orderActions.setAddress,
-    asyncIncrement: orderActions.asyncIncrement,
 };
 
 export default connect(

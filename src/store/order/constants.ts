@@ -1,6 +1,9 @@
 export const INCREMENT = "order/INCREMENT";
 export const ADD = "order/ADD";
-export const SET_MAP = "order/SET_MAP";
+export const SET_YANDEX_MAP = "order/SET_YANDEX_MAP";
 export const GET_ADDRESS = "order/GET_ADDRESS";
 export const SET_ADDRESS_FROM_STR = "order/SET_ADDRESS_FROM_STR";
 export const SET_ADDRESS = "order/SET_ADDRESS";
+export const SET_COORDINATES = "order/SET_COORDINATES";
+export const SET_CREWS_LIST = "order/SET_CREWS_LIST";
+export const SET_SELECTED_CAT = "order/SET_SELECTED_CAT";

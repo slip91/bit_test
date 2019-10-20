@@ -3,65 +3,28 @@ import { hot } from "react-hot-loader";
 import { connect } from "react-redux";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import { bindActionCreators, Dispatch, ActionCreatorsMapObject } from "redux";
-import {isBoolean} from "util";
 import {AppState} from "../../store/index";
 import { orderActions, orderSelectors } from "../../store/order";
 
-interface IProps {
-    onSetMap: any;
-    onGetAddress: any;
-}
+interface IProps {}
 
-interface IState {
-    coord: [];
-    ymaps: any;
-    input: string;
-}
+interface IState {}
 
 class MapCar extends React.Component< IProps, IState> {
-    public state: IState = {
-        coord: [],
-        ymaps: {},
-        input: "Борисоглебский переулок 10с1",
-    }
+    public state: IState = {}
 
     private onMapClick(event) {
-        console.log("onMapClick");
-        this.props.onGetAddress().then((status: any) => {
-            console.log(status);
-        };
-        // this.getAddress(event.get("coords"));
-        // this.getAddress(event.get("coords"));
-        // this.setState((state) => {
-        //     return {
-        //         coord: event.get("coords"),
-        //     };
-        // });
-    }
-    private getAddress(coords) {
-        this.props.map.geocode(coords).then((res) => {
-            // console.log(res);
-            console.log( res.geoObjects.get(0).getLocalities()[0]);
-            console.log( res.geoObjects.get(0).getThoroughfare());
-            console.log( res.geoObjects.get(0).getPremiseNumber());
-
-            console.log("-----2----------");
-        });
+        this.props.findUserByCoordinates(event.get("coords"));
     }
 
-    private getAddressStr(addrStr) {
-        this.state.ymaps.geocode(addrStr).then((res) => {
-
-            console.log( res.geoObjects.get(0).getLocalities()[0]);
-            console.log( res.geoObjects.get(0).getThoroughfare());
-            console.log( res.geoObjects.get(0).getPremiseNumber());
-        }
+    private onLoadMap(ymaps: any) {
+        this.props.setYandexMap(ymaps);
     }
 
     render() {
+        console.log(this.props.coordinates);
         return (
             <div className="map">
-                {/*{this.props.map}*/}
                 <YMaps query ={{
                     apikey: "75297380-b1bd-4ffc-a589-654d79516174",
                 }}>
@@ -69,12 +32,21 @@ class MapCar extends React.Component< IProps, IState> {
                         defaultState={{ center: [55.751574, 37.573856], zoom: 11 }}
                         modules={["geolocation", "geocode"]}
                         apikey = "75297380-b1bd-4ffc-a589-654d79516174"
-                        onLoad={(ymaps) => {this.state.ymaps = ymaps; this.props.onSetMap(ymaps);}}
-
+                        onLoad={this.onLoadMap.bind(this)}
                         onClick={this.onMapClick.bind(this)} >
                         <Placemark
-                            geometry={this.state.coord}
+                            geometry={this.props.coordinates}
+                            options= {{iconColor: "yellow"}}
                         />
+
+                        {this.props.crewsList.map((car) => {
+                            const geometry = [car.lat, car.lon];
+                            return ( <Placemark
+                                    geometry={geometry}
+                                />
+                            );
+                        })}
+
                     </Map>
                 </YMaps>
             </div>
@@ -85,14 +57,14 @@ class MapCar extends React.Component< IProps, IState> {
 declare let module: object;
 
 const dispatchProps = {
-    onIncrement: orderActions.increment,
-    onSetMap: orderActions.setMap,
+    findUserByCoordinates: orderActions.findUserByCoordinates,
+    setYandexMap: orderActions.setYandexMap,
 };
 
 export default connect(
     (state: AppState) => ({
-        // counter: state.map.reduxCounter,
-        // map: state.map.reduxMap,
+        coordinates: state.order.coordinates,
+        crewsList: state.order.crewsList,
     }), dispatchProps)(MapCar);
 
 // export default hot(module)(MapCar);

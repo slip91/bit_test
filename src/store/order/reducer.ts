@@ -1,29 +1,58 @@
 import { combineReducers } from "redux";
 import { ActionType } from "typesafe-actions";
 import * as order from "./actions";
-import {ADD, INCREMENT, SET_ADDRESS, SET_ADDRESS_FROM_STR, SET_MAP} from "./constants";
-import {IOrderState, OrderAction} from "./types";
+import {
+  ADD,
+  INCREMENT,
+  SET_ADDRESS,
+  SET_CREWS_LIST,
+  SET_ADDRESS_FROM_STR,
+  SET_MAP,
+  SET_COORDINATES,
+  SET_YANDEX_MAP,
+  SET_SELECTED_CAT
+} from "./constants";
+import {ICrewInfo, IOrderState, OrderAction} from "./types";
 
 export const initialState: IOrderState = {
-  userAddress: null,
+  coordinates: [],
+  crewsList: [],
+  userAddress: "",
   yandexMap: {},
+  selectedCar: null,
 };
 
 const orderReducer = (state: IOrderState = initialState, action: OrderAction) => {
   switch (action.type) {
-    case SET_MAP: {
+    case SET_YANDEX_MAP: {
       return {
         ...state,
         yandexMap: action.payload,
       };
     },
     case SET_ADDRESS: {
-      console.log("SET_ADDRESS");
-      console.log(action.payload);
-
       return {
         ...state,
         userAddress: action.payload,
+      };
+    },
+    case SET_COORDINATES: {
+        return {
+          ...state,
+          coordinates: action.payload,
+        };
+    },
+    case SET_CREWS_LIST: {
+      return {
+        ...state,
+        crewsList: action.payload,
+      };
+    }
+    case SET_SELECTED_CAT: {
+      console.log(action.payload);
+      return {
+        ...state,
+        selectedCar: action.payload,
       };
     }
     default:

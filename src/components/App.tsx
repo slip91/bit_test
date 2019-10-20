@@ -1,7 +1,9 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import MapCar from "./mapCar/MapCar";
+import CarList from "./carList/carList";
 import Wherefrom from "./wherefrom/wherefrom";
+import SelectCar from "./selectCar/selectCar";
 
 const reactLogo = require("./../assets/img/react_logo.svg");
 import "./../assets/scss/App.scss";
@@ -26,6 +28,8 @@ class App extends React.Component< IProps, IState> {
             <div className="app">
                 <MapCar/>
                 <Wherefrom/>
+                <SelectCar/>
+                <CarList/>
             </div>
         );
     }
