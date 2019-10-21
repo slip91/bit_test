@@ -1,6 +1,4 @@
-import {stringify} from "querystring";
 import * as React from "react";
-import { hot } from "react-hot-loader";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
 import {orderActions} from "../../store/order";
@@ -22,23 +20,29 @@ class Wherefrom extends React.Component< IProps, IState> {
     }
 
     public handleChange(event) {
-        this.setState({userAddress: event.target.value});
-        if (this.validate(event.target.value)) {
-            this.props.findUserByStr(event.target.value);
-            this.state.hasError = false;
-        } else {
-            this.state.hasError = true;
-        }
-    }
-    public componentWillReceiveProps(props: IProps) {
-        if (props.userAddress !== this.state.userAddress) {
-            this.setState({userAddress: props.userAddress});
-        }
+        // this.setState({userAddress: event.target.value});
+
+        console.log("handleChange");
+        this.props.validateAddr(event.target.value);
+
+        //
+        // if (this.validate(event.target.value)) {
+        //     this.props.findUserByStr(event.target.value);
+        //     this.state.hasError = false;
+        // } else {
+        //     this.state.hasError = true;
+        // }
     }
 
-    public validate(val: string): boolean {
-        return /[a-zA-zа-яА-Я]{1,}[\,]{1,1}[\s]{0,1}[a-zA-zа-яА-Я\d-]{1,}/gm.test(val);
-    }
+    // public componentWillReceiveProps(props: IProps) {
+    //     if (props.userAddress !== this.state.userAddress) {
+    //         this.setState({userAddress: props.userAddress});
+    //     }
+    // }
+
+    // public validate(val: string): boolean {
+    //     return /[a-zA-zа-яА-Я]{1,}[\,]{1,1}[\s]{0,1}[a-zA-zа-яА-Я\d-]{1,}/gm.test(val);
+    // }
 
     private errorField() {
         if (this.state.hasError) {
@@ -48,10 +52,14 @@ class Wherefrom extends React.Component< IProps, IState> {
         }
     }
 
-    public render() {
+    render() {
         return (
-            <div className="app">
-                <input value={this.state.userAddress} onChange={this.handleChange.bind(this)}/>
+            <div className="wherefrom">
+                <label htmlFor="wherefrom">Откуда</label>
+                <input value={this.props.userAddress}
+                       className={"form-control"}
+                       id={"wherefrom"}
+                       onChange={this.handleChange.bind(this)}/>
                 {this.errorField()}
             </div>
         );
@@ -63,6 +71,7 @@ declare let module: object;
 const dispatchProps = {
     findUserByStr: orderActions.findUserByStr,
     onSetAddressFromStr: orderActions.setAddress,
+    validateAddr: orderActions.validate,
 };
 
 export default connect(

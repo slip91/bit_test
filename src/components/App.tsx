@@ -1,35 +1,37 @@
 import * as React from "react";
+import Button from "react-bootstrap/Button";
 import { hot } from "react-hot-loader";
 import MapCar from "./mapCar/MapCar";
 import CarList from "./carList/carList";
 import Wherefrom from "./wherefrom/wherefrom";
 import SelectCar from "./selectCar/selectCar";
-
-const reactLogo = require("./../assets/img/react_logo.svg");
 import "./../assets/scss/App.scss";
 
-interface IProps {}
-
-interface IState {
-    coord: [];
-    ymaps: any;
-    input: string;
-}
-
-class App extends React.Component< IProps, IState> {
-    public state: IState = {
-        coord: [],
-        ymaps: {},
-        input: "Борисоглебский переулок 10с1",
-    }
-
+class App extends React.Component< {}, {}> {
     private render() {
         return (
-            <div className="app">
-                <MapCar/>
-                <Wherefrom/>
-                <SelectCar/>
-                <CarList/>
+            <div className="container">
+                <div className="row">
+                    <div class="col-12">
+                        <Wherefrom/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-6">
+                        <SelectCar/>
+                    </div>
+                </div>
+                <div className={"row"}>
+                    <div className="col-6">
+                        <MapCar/>
+                    </div>
+                    <div className="col-6">
+                        <CarList/>
+                    </div>
+                </div>
+                <div className={"row"}>
+                    <Button variant="primary">Заказать</Button>
+                </div>
             </div>
         );
     }

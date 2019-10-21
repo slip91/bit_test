@@ -57,7 +57,6 @@ const orderReducer = (state: IOrderState = initialState, action: OrderAction) =>
       };
     }
     case SET_SELECTED_CAT: {
-      console.log(action.payload);
       return {
         ...state,
         selectedCar: action.payload,

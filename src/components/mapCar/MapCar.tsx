@@ -36,9 +36,11 @@ class MapCar extends React.Component< IProps, {}> {
                     <Map
                         defaultState={{ center: [55.751574, 37.573856], zoom: 11 }}
                         modules={["geolocation", "geocode"]}
+                        width={550}
+                        height={300}
                         apikey = "75297380-b1bd-4ffc-a589-654d79516174"
                         onLoad={this.onLoadMap.bind(this)}
-                        onClick={this.onMapClick.bind(this)} >
+                        onClick={this.onMapClick.bind(this)}>
                         <Placemark
                             geometry={this.props.coordinates}
                             options= {{iconColor: this.props.userAddressErr ? "red" : "yellow"}}
