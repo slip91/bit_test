@@ -19,16 +19,14 @@ class CarList extends React.Component< IProps, {}> {
     }
 
     public render() {
-        return (
+        return  this.props.crewsList.length > 0 ? (
             <ListGroup >
                 {this.props.crewsList.map((car) => {
                     return (<ListGroup.Item
                             key = {car.crew_id}
-                            id = {car.crew_id}
                             onClick={() => this.handleClickCar(car)}
                             active = {this.props.selectedCar != null ? this.props.selectedCar.crew_id === car.crew_id : false}
                         >
-
                         <div className={"row"}>
                             <div className={"col-2"}>
                                 <img src={carLogo} height={"60%"} width={"50px"}/>
@@ -42,7 +40,7 @@ class CarList extends React.Component< IProps, {}> {
                     );
                 })}
             </ListGroup>
-        );
+        ) : (null);
     }
 }
 

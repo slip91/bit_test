@@ -16,35 +16,29 @@ class SelectCar extends React.Component< IProps, {}> {
             return (
                 <div className={"row selectCar"}>
                     <div className={"col-3 text-center"}>
-                        <p>Подходящий экипаж: </p>
+                        <p>Подходящий экипаж:</p>
                     </div>
                     <div className={"col-9"}>
                         <Card style={{ width: "18rem" }}>
                             <Card.Body>
-                                <Card.Text>
-                                    <div className={"row"}>
-                                        <div className={"col-3"}>
-                                            <img src={carLogo} height="60%"/>
-                                        </div>
-                                        <div className={"col-9"}>
-                                            <h5>{this.props.selectedCar.car_mark} {this.props.selectedCar.car_model} </h5>
-                                            <p>{this.props.selectedCar.car_color}</p>
-                                            <span className="badge badge-pill badge-primary">{this.props.selectedCar.car_number}</span>
-                                        </div>
+                                <div className={"row"}>
+                                    <div className={"col-3"}>
+                                        <img src={carLogo} height="60%"/>
                                     </div>
-                                </Card.Text>
+                                    <div className={"col-9"}>
+                                        <h5>{this.props.selectedCar.car_mark} {this.props.selectedCar.car_model} </h5>
+                                        <p>{this.props.selectedCar.car_color}</p>
+                                        <span className="badge badge-pill badge-primary">{this.props.selectedCar.car_number}</span>
+                                    </div>
+                                </div>
                             </Card.Body>
                         </Card>
                     </div>
                 </div>
             );
         } else {
-            return (
-                <div>
-                </div>
-            );
+            return (null);
         }
-
     }
 }
 

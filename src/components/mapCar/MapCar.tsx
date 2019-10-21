@@ -15,6 +15,7 @@ interface IProps {
 
 class MapCar extends React.Component< IProps, {}> {
     private onMapClick(event) {
+        console.log(this.props.coordinates);
         this.props.findUserByCoordinates(event.get("coords"));
     }
 
@@ -36,15 +37,19 @@ class MapCar extends React.Component< IProps, {}> {
                         apikey = "75297380-b1bd-4ffc-a589-654d79516174"
                         onLoad={this.onLoadMap.bind(this)}
                         onClick={this.onMapClick.bind(this)}>
-                        <Placemark
-                            geometry={this.props.coordinates}
-                            properties = {{iconCaption: this.props.userAddressErr ? "Адрес не найден" : ""}}
-                            options= {{
-                                iconColor: this.props.userAddressErr ? "red" : "yellow"}}
-                        />
+                        {this.props.coordinates.length > 0 ? (
+                            <Placemark
+                                geometry={this.props.coordinates}
+                                properties = {{iconCaption: this.props.userAddressErr ? "Адрес не найден" : undefined}}
+                                options= {{iconColor: this.props.userAddressErr ? "red" : "yellow"}}
+                            />
+                            ) : ""
+                        }
                         {this.props.crewsList.map((car) => {
                             const geometry = [car.lat, car.lon];
                             return ( <Placemark
+                                    key={car.crew_id}
+                                    properties = {{iconCaption: car.car_color + " " + car.car_model + " " + car.car_number}}
                                     geometry={geometry}
                                 />
                             );

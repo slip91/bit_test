@@ -8,6 +8,7 @@ interface IProps {
     userAddress: any;
     validateAddr: any;
     userAddressErr: boolean;
+    setAddress: any;
 }
 
 // interface IState {}
@@ -15,7 +16,8 @@ class Wherefrom extends React.Component< IProps, {}> {
     // public state: IState = {}
 
     public handleChange(event) {
-        this.props.validateAddr(event.target.value);
+        this.props.setAddress(event.target.value);
+        this.props.validateAddr();
     }
 
     private errorField() {
@@ -41,7 +43,7 @@ class Wherefrom extends React.Component< IProps, {}> {
 
 const dispatchProps = {
     findUserByStr: orderActions.findUserByStr,
-    onSetAddressFromStr: orderActions.setAddress,
+    setAddress: orderActions.setAddress,
     validateAddr: orderActions.validate,
 };
 
