@@ -51,27 +51,36 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
         // проверяем валидность адреса, например если точка является озером
         if (street === undefined || house === undefined) {
             dispatch(setAddressErr(true));
-            dispatch(setAddress(null));
+            dispatch(setAddress(""));
+            dispatch(searchCrews(false));
         } else {
             street.replace("улица", "").trim();
             // todo 3
             const addr = street + ", " + house;
             dispatch(setAddressErr(false));
             dispatch(setAddress(addr));
-            dispatch(searchCrews());
-            console.log(addr);
+            dispatch(searchCrews(true));
         }
     });
 };
 
-export const searchCrews = (): ThunkAction<void, RootState, undefined, RootActions> => async (
+// тут
+export const searchCrews = (status: boolean): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<Action>,
     getState: any, // todo 2
 ) => {
     // todo create send data
    const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json");
    const dataResponce: ISuitableCrewsResponse  = await suitableCrewsResponse.json();
-   dispatch(setCrewsList(dataResponce.data.crews_info));
+
+   // очищаем если false
+   if (status) {
+       dispatch(setCrewsList(dataResponce.data.crews_info));
+   } else {
+       dispatch(setCrewsList([]));
+       dispatch(setSelectedCar(null);
+   }
+
    // first element set to select
    if (dataResponce.data.crews_info.length > 0) {dispatch(setSelectedCar(dataResponce.data.crews_info[0]));}
 };
