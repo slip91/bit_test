@@ -68,4 +68,4 @@ const orderReducer = (state: IOrderState = initialState, action: OrderAction) =>
   }
 };
 
-export  default orderReducer;
+export default orderReducer;
