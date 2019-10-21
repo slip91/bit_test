@@ -60,7 +60,6 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
     });
 };
 
-// todo ищем экипажи, нехватает формирова
 export const searchCrews = (status: boolean = true): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<RootActions>,
     getState: any,
@@ -127,7 +126,6 @@ export const validate = (): ThunkAction<void, RootState, undefined, RootActions>
     }
 };
 
-// todo ищем экипажи, нехватает формирова
 export const send = (): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<RootActions>,
     getState: any,
