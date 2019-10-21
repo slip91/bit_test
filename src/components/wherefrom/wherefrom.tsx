@@ -2,13 +2,14 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
 import {orderActions} from "../../store/order";
+import {OrderAction} from "../../store/order/types";
 
 interface IProps {
-    findUserByStr: any;
-    userAddress: any;
-    validateAddr: any;
-    userAddressErr: boolean;
-    setAddress: any;
+    findUserByStr: OrderAction;
+    userAddress: OrderAction;
+    validateAddr: OrderAction;
+    userAddressErr: OrderAction;
+    setAddress: OrderAction;
 }
 
 // interface IState {}
@@ -24,7 +25,7 @@ class Wherefrom extends React.Component< IProps, {}> {
         if (this.props.userAddressErr) {
             return (<p style={{color: "red"}}>Место заказа не указано</p>);
         } else {
-            return (<p></p>);
+            return (null);
         }
     }
     render() {

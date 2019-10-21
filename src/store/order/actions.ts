@@ -64,7 +64,7 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
 // todo ищем экипажи, нехватает формирова
 export const searchCrews = (status: boolean = true): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<RootActions>,
-    getState: any, // todo 2
+    getState: any,
 ) => {
     // todo create send data
     const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json");
@@ -85,7 +85,7 @@ export const searchCrews = (status: boolean = true): ThunkAction<void, RootState
 
 export const validate = (): ThunkAction<void, RootState, undefined, RootActions> => (
     dispatch: Dispatch<RootActions>,
-    getState: any, // todo 2
+    getState: any,
 ) => {
     const newAddr = getState().order.userAddress;
     const statusRegexpValidate = /[a-zA-zа-яА-Я]{1,}[\,]{1,1}[\s]{0,1}[a-zA-zа-яА-Я\d-]{1,}/gm.test(newAddr);

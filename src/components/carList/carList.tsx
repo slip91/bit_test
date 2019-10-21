@@ -2,14 +2,15 @@ import * as React from "react";
 import { ListGroup } from "react-bootstrap";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
+
 import {orderActions} from "../../store/order";
-import {ICrewInfo} from "../../store/order/types";
+import {ICrewInfo, OrderAction} from "../../store/order/types";
 
 const carLogo = require("./../../assets/img/sportive-car.svg");
 
 interface IProps {
     crewsList: ICrewInfo[];
-    setSelectedCar: any;
+    setSelectedCar: OrderAction;
     selectedCar: ICrewInfo;
 }
 

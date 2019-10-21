@@ -1,5 +1,5 @@
 import {ActionType} from "typesafe-actions";
-import {actionOrder, default as orderActions} from "./actions"
+import * as orderActions from "./actions";
 
 export interface RootState {
     order: IOrderState;
@@ -36,7 +36,7 @@ export interface ICrewData {
 }
 
 export interface ISuitableCrewsResponse {
-    code: number; // todo or enum
+    code: number; //or enum
     descr: string;
     data: ICrewData;
 }

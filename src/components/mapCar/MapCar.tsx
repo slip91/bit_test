@@ -3,19 +3,18 @@ import { connect } from "react-redux";
 import { Map, Placemark, YMaps } from "react-yandex-maps";
 import {AppState} from "../../store/index";
 import { orderActions} from "../../store/order";
-import {ICrewInfo} from "../../store/order/types";
+import {ICrewInfo, OrderAction} from "../../store/order/types";
 
 interface IProps {
     coordinates: number[];
     crewsList: ICrewInfo[];
-    findUserByCoordinates: any;
-    setYandexMap: any;
+    findUserByCoordinates: OrderAction;
+    setYandexMap: OrderAction;
     userAddressErr: boolean;
 }
 
 class MapCar extends React.Component< IProps, {}> {
     private onMapClick(event) {
-        console.log(this.props.coordinates);
         this.props.findUserByCoordinates(event.get("coords"));
     }
 
