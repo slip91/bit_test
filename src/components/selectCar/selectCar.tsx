@@ -15,10 +15,10 @@ class SelectCar extends React.Component< IProps, {}> {
         if ( this.props.selectedCar !== null) {
             return (
                 <div className={"row selectCar"}>
-                    <div className={"col-3 text-center"}>
-                        <p>Подходящий экипаж:</p>
+                    <div className={"col-5 leftTextSelectCar"}>
+                        <span className="align-middle">Подходящий экипаж:</span>
                     </div>
-                    <div className={"col-9"}>
+                    <div className={"col-7"}>
                         <Card style={{ width: "18rem" }}>
                             <Card.Body>
                                 <div className={"row"}>

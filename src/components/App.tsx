@@ -13,6 +13,7 @@ import "./../assets/scss/App.scss";
 interface IProps {
     userAddressErr: boolean;
     validate: any;
+    sendOrder: any;
 }
 
 interface IState {
@@ -24,24 +25,26 @@ class App extends React.Component< IProps, IState> {
         send: true,
     }
 
+    // depecated
     private componentWillReceiveProps(nextProps) {
-        if (!this.state.send) {
-            console.log("nextProps.userAddressErr");
-            console.log(nextProps.userAddressErr);
-            this.state.send = !nextProps.userAddressErr;
-        }
+        this.state.send = !nextProps.userAddressErr;
     }
 
-    private submit() {
-        console.log("this.props.validate()")
-        console.log(this.props.validate())
-
-        this.setState({ send: this.props.validate()})
+    private async submit() {
+        await this.setState({ send: this.props.validate()});
+        if (this.state.send) {
+            this.props.sendOrder();
+        }
     }
 
     private render() {
         return (
             <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <h2>Детали заказа</h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12">
                         <Wherefrom />
@@ -52,7 +55,7 @@ class App extends React.Component< IProps, IState> {
                         <SelectCar/>
                     </div>
                 </div>
-                <div className={"row"}>
+                <div className={"row mapMain"}>
                     <div className="col-6">
                         <MapCar/>
                     </div>
@@ -61,7 +64,9 @@ class App extends React.Component< IProps, IState> {
                     </div>
                 </div>
                 <div className={"row"}>
-                    <Button variant="primary"  disabled={!this.state.send} onClick={this.submit.bind(this)}>Заказать</Button>
+                    <div className="col-12 text-center">
+                        <Button variant="primary"  disabled={!this.state.send} onClick={this.submit.bind(this)}>Заказать</Button>
+                    </div>
                 </div>
             </div>
         );
@@ -70,6 +75,7 @@ class App extends React.Component< IProps, IState> {
 
 const dispatchProps = {
     validate: orderActions.validate,
+    sendOrder: orderActions.send,
 };
 
 export default connect(

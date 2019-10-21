@@ -10,7 +10,7 @@ import {
 } from "./constants";
 
 import {ThunkAction} from "redux-thunk";
-import {ICrewInfo, ISuitableCrewsResponse, RootActions, RootState} from "./types";
+import {ICrewInfo, ISuitableCrewsResponse, RootActions, RootState, IOrder, IAddresses, ISearchCrews} from "./types";
 
 export const setYandexMap = (map: object) => action(SET_YANDEX_MAP, map);
 export const setCoordinates = (coordinates: any) => action(SET_COORDINATES, coordinates);
@@ -27,7 +27,7 @@ export const findUserByStr = (addr: string): ThunkAction<void, RootState, undefi
     getState().order.yandexMap.geocode(addr).then((res) => {
         if (res.metaData.geocoder.found > 0) {
             dispatch(setCoordinates(res.geoObjects.get(0).geometry._coordinates));
-            dispatch(setAddress(addr));
+            // dispatch(setAddress(addr));
             dispatch(searchCrews());
         } else {
             dispatch(setCoordinates([]));
@@ -51,8 +51,7 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
             dispatch(setAddress(""));
             dispatch(searchCrews(false));
         } else {
-            street.replace("улица", "").trim();
-            // todo 3
+            street.replace("улица", "").trim(); // только для визуала
             const addr = street + ", " + house;
             dispatch(setAddressErr(false));
             dispatch(setAddress(addr));
@@ -66,8 +65,34 @@ export const searchCrews = (status: boolean = true): ThunkAction<void, RootState
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {
-    // todo create send data
-    const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json");
+    const state = getState().order;
+    const currDate = new Date();
+
+    const currAddresses: IAddresses = {
+        address: state.userAddress,
+        lat: state.coordinates[0],
+        lon: state.coordinates[1],
+    };
+    const findCrews: ISearchCrews = {
+        addresses: [currAddresses],
+        source_time: currDate.getFullYear() + "" +
+            currDate.getMonth() + "" +
+            currDate.getDate() + "" +
+            currDate.getHours() + "" +
+            currDate.getMinutes() + "" +
+            currDate.getSeconds(), // формат времени ГГГГММДДччммсс
+
+    };
+
+    console.log(findCrews);
+
+    const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json",  {
+        method: "GET", // GET т.к. мок файликом а вообще POST
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(findCrews), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+    });
     const dataResponce: ISuitableCrewsResponse = await suitableCrewsResponse.json();
 
     // очищаем если false
@@ -91,7 +116,7 @@ export const validate = (): ThunkAction<void, RootState, undefined, RootActions>
     const statusRegexpValidate = /[a-zA-zа-яА-Я]{1,}[\,]{1,1}[\s]{0,1}[a-zA-zа-яА-Я\d-]{1,}/gm.test(newAddr);
     if (statusRegexpValidate) {
         dispatch(setAddressErr(false)); // нету ошибок
-        dispatch(findUserByStr(newAddr));  // обычный поиск по строке
+        dispatch(findUserByStr(newAddr));
         return true;
     } else {
         // clear all
@@ -100,4 +125,39 @@ export const validate = (): ThunkAction<void, RootState, undefined, RootActions>
         dispatch(setAddressErr(true));
         return false;
     }
+};
+
+// todo ищем экипажи, нехватает формирова
+export const send = (): ThunkAction<void, RootState, undefined, RootActions> => async (
+    dispatch: Dispatch<RootActions>,
+    getState: any,
+) => {
+    const state = getState().order;
+    const currDate = new Date();
+
+    const currAddresses: IAddresses = {
+        address: state.userAddress,
+        lat: state.coordinates[0],
+        lon: state.coordinates[1],
+    };
+    const order: IOrder = {
+        crew_id: state.selectedCar.crew_id,
+        source_time: currDate.getFullYear() + "" +
+            currDate.getMonth() + "" +
+            currDate.getDate() + "" +
+            currDate.getHours() + "" +
+            currDate.getMinutes() + "" +
+            currDate.getSeconds(), // формат времени ГГГГММДДччммсс
+        addresses: [currAddresses],
+    };
+
+    console.log(order);
+
+    fetch("./src/mock/submitOrder.json", {
+        method: "GET", // GET т.к. мок файликом а вообще POST
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(order), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+    }).then((response) => response.json());
 };

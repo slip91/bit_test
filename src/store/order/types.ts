@@ -1,10 +1,6 @@
 import {ActionType} from "typesafe-actions";
 import * as orderActions from "./actions";
 
-export interface RootState {
-    order: IOrderState;
-}
-
 export interface ICoordinates {
     lat: number;
     long: number;
@@ -35,8 +31,22 @@ export interface ICrewData {
     crews_info: ICrewInfo[];
 }
 
+export interface IAddresses {
+    address: string;
+    lat: number;
+    lon: number;
+}
+
+export interface ISearchCrews {
+    source_time: string; // формат времени ГГГГММДДччммсс
+    addresses: IAddresses[];
+}
+export interface IOrder extends ISearchCrews {
+    crew_id: number;
+}
+
 export interface ISuitableCrewsResponse {
-    code: number; //or enum
+    code: number; // or enum
     descr: string;
     data: ICrewData;
 }
