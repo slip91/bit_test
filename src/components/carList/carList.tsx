@@ -1,24 +1,19 @@
 import * as React from "react";
-import { hot } from "react-hot-loader";
 import { ListGroup } from "react-bootstrap";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
-import {ICrewInfo} from "../../store/order/types";
 import {orderActions} from "../../store/order";
+import {ICrewInfo} from "../../store/order/types";
+
 const carLogo = require("./../../assets/img/sportive-car.svg");
 
 interface IProps {
     crewsList: ICrewInfo[];
+    setSelectedCar: any;
     selectedCar: ICrewInfo;
 }
 
-interface IState {
-    coord: [];
-    ymaps: any;
-    input: string;
-}
-
-class СarList extends React.Component< IProps, IState> {
+class CarList extends React.Component< IProps, {}> {
     public handleClickCar(car: ICrewInfo) {
         this.props.setSelectedCar(car);
     }
@@ -51,8 +46,6 @@ class СarList extends React.Component< IProps, IState> {
     }
 }
 
-declare let module: object;
-
 const dispatchProps = {
     setSelectedCar: orderActions.setSelectedCar,
 };
@@ -61,4 +54,4 @@ export default connect(
     (state: AppState) => ({
         crewsList: state.order.crewsList,
         selectedCar: state.order.selectedCar,
-    }), dispatchProps)(СarList);
+    }), dispatchProps)(CarList);

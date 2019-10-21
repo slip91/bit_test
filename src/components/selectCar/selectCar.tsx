@@ -1,26 +1,17 @@
 import * as React from "react";
-import { hot } from "react-hot-loader";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
-import {orderActions} from "../../store/order";
 import {Card} from "react-bootstrap";
 import {ICrewInfo} from "../../store/order/types";
 
 const carLogo = require("./../../assets/img/sportive-car.svg");
 
 interface IProps {
-    selectedCar: ICrewInfo,
+    selectedCar: ICrewInfo;
 }
 
-interface IState {
-    coord: [];
-    ymaps: any;
-    input: string;
-}
-
-class SelectCar extends React.Component< IProps, IState> {
+class SelectCar extends React.Component< IProps, {}> {
     public render() {
-        // console.log(this.props.selectedCar);
         if ( this.props.selectedCar !== null) {
             return (
                 <div className={"row selectCar"}>
@@ -28,7 +19,7 @@ class SelectCar extends React.Component< IProps, IState> {
                         <p>Подходящий экипаж: </p>
                     </div>
                     <div className={"col-9"}>
-                        <Card style={{ width: '18rem' }}>
+                        <Card style={{ width: "18rem" }}>
                             <Card.Body>
                                 <Card.Text>
                                     <div className={"row"}>
@@ -57,12 +48,7 @@ class SelectCar extends React.Component< IProps, IState> {
     }
 }
 
-
-declare let module: object;
-
-const dispatchProps = {
-
-};
+const dispatchProps = {};
 
 export default connect(
     (state: AppState) => ({

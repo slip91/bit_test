@@ -9,7 +9,7 @@ import {
     SET_ADDRESS_ERR,
 } from "./constants";
 
-import { ThunkAction } from "redux-thunk";
+import {ThunkAction} from "redux-thunk";
 import {ICrewInfo, ISuitableCrewsResponse, RootState, RootActions} from "./types";
 
 export const setYandexMap = (map: object) => action(SET_YANDEX_MAP, map);
@@ -23,17 +23,14 @@ export const findUserByStr = (addr: string): ThunkAction<void, RootState, undefi
     dispatch: Dispatch<Action>,
     getState: any, // todo 2
 ) => {
-    console.log("searchByStr 0");
-
     // даем яндексу адресс и получаем координаты и другую информацию.
     getState().order.yandexMap.geocode(addr).then((res) => {
-        console.log("searchByStr");
-
         if (res.metaData.geocoder.found > 0) {
-            dispatch(setCoordinates([]));
+            dispatch(setCoordinates(res.geoObjects.get(0).geometry._coordinates));
             dispatch(setAddress(addr));
             dispatch(searchCrews());
         } else {
+            dispatch(setCoordinates([]));
             dispatch(searchCrews(false));
         }
     });
@@ -67,42 +64,43 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
 };
 
 // todo ищем экипажи, нехватает формирова
-export const searchCrews = (status: boolean): ThunkAction<void, RootState, undefined, RootActions> => async (
+export const searchCrews = (status: boolean = true): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<Action>,
     getState: any, // todo 2
 ) => {
     // todo create send data
-   const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json");
-   const dataResponce: ISuitableCrewsResponse  = await suitableCrewsResponse.json();
+    const suitableCrewsResponse = await fetch("./src/mock/suitableCrews.json");
+    const dataResponce: ISuitableCrewsResponse = await suitableCrewsResponse.json();
 
-   // очищаем если false
-   if (status) {
-       dispatch(setCrewsList(dataResponce.data.crews_info));
-   } else {
-       dispatch(setCrewsList([]));
-       dispatch(setSelectedCar(null);
-   }
+    // очищаем если false
 
-   // первая машина, становиться предпочитаемым вариантом, но возможно тут с учетом сортировки
-   if (dataResponce.data.crews_info.length > 0) {dispatch(setSelectedCar(dataResponce.data.crews_info[0]));}
+    if (status) {
+        dispatch(setCrewsList(dataResponce.data.crews_info));
+    } else {
+        dispatch(setCrewsList([]));
+        dispatch(setSelectedCar(null);
+    }
+
+    // первая машина, становиться предпочитаемым вариантом, но возможно тут с учетом сортировки
+    if (dataResponce.data.crews_info.length > 0) {
+        dispatch(setSelectedCar(dataResponce.data.crews_info[0]));
+    }
 };
 
 export const validate = (newAddr: string): ThunkAction<void, RootState, undefined, RootActions> => async (
     dispatch: Dispatch<Action>,
     getState: any, // todo 2
 ) => {
-    dispatch(findUserByStr(newAddr));
-
-    console.log("redux validate");
-
+    dispatch(setAddress(newAddr));
     const statusRegexpValidate = /[a-zA-zа-яА-Я]{1,}[\,]{1,1}[\s]{0,1}[a-zA-zа-яА-Я\d-]{1,}/gm.test(newAddr);
-
-
     if (statusRegexpValidate) {
-
-        dispatch(setAddressErr(false));
+        dispatch(setAddressErr(false)); // нету ошибок
+        dispatch(findUserByStr(newAddr));  // обычный поиск по строке
     } else {
+        // clear all
+        dispatch(setSelectedCar(null);
+        dispatch(setCrewsList([]));
         dispatch(setAddressErr(true));
     }
-    dispatch(setAddress(newAddr));
+
 };

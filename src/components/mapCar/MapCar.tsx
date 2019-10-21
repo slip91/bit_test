@@ -1,10 +1,8 @@
 import * as React from "react";
-// import { hot } from "react-hot-loader";
 import { connect } from "react-redux";
 import { Map, Placemark, YMaps } from "react-yandex-maps";
-// import { bindActionCreators, Dispatch, ActionCreatorsMapObject } from "redux";
 import {AppState} from "../../store/index";
-import { orderActions, orderSelectors } from "../../store/order";
+import { orderActions} from "../../store/order";
 import {ICrewInfo} from "../../store/order/types";
 
 interface IProps {
@@ -15,10 +13,7 @@ interface IProps {
     userAddressErr: boolean;
 }
 
-// interface IState {}
 class MapCar extends React.Component< IProps, {}> {
-    // public state: IState = {}
-
     private onMapClick(event) {
         this.props.findUserByCoordinates(event.get("coords"));
     }
@@ -43,7 +38,9 @@ class MapCar extends React.Component< IProps, {}> {
                         onClick={this.onMapClick.bind(this)}>
                         <Placemark
                             geometry={this.props.coordinates}
-                            options= {{iconColor: this.props.userAddressErr ? "red" : "yellow"}}
+                            properties = {{iconCaption: this.props.userAddressErr ? "Адрес не найден" : ""}}
+                            options= {{
+                                iconColor: this.props.userAddressErr ? "red" : "yellow"}}
                         />
                         {this.props.crewsList.map((car) => {
                             const geometry = [car.lat, car.lon];
@@ -58,8 +55,6 @@ class MapCar extends React.Component< IProps, {}> {
         );
     }
 }
-
-declare let module: object;
 
 const dispatchProps = {
     findUserByCoordinates: orderActions.findUserByCoordinates,
