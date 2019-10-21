@@ -16,6 +16,7 @@ export interface IOrderState {
     coordinates: [];
     crewsList: ICrewInfo[];
     selectedCar: ICrewInfo | null;
+    userAddressErr: boolean;
 }
 
 export interface ICrewInfo {

@@ -1,17 +1,23 @@
 import * as React from "react";
-import { hot } from "react-hot-loader";
+// import { hot } from "react-hot-loader";
 import { connect } from "react-redux";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
-import { bindActionCreators, Dispatch, ActionCreatorsMapObject } from "redux";
+import { Map, Placemark, YMaps } from "react-yandex-maps";
+// import { bindActionCreators, Dispatch, ActionCreatorsMapObject } from "redux";
 import {AppState} from "../../store/index";
 import { orderActions, orderSelectors } from "../../store/order";
+import {ICrewInfo} from "../../store/order/types";
 
-interface IProps {}
+interface IProps {
+    coordinates: number[];
+    crewsList: ICrewInfo[];
+    findUserByCoordinates: any;
+    setYandexMap: any;
+    userAddressErr: boolean;
+}
 
-interface IState {}
-
-class MapCar extends React.Component< IProps, IState> {
-    public state: IState = {}
+// interface IState {}
+class MapCar extends React.Component< IProps, {}> {
+    // public state: IState = {}
 
     private onMapClick(event) {
         this.props.findUserByCoordinates(event.get("coords"));
@@ -22,7 +28,6 @@ class MapCar extends React.Component< IProps, IState> {
     }
 
     render() {
-        console.log(this.props.coordinates);
         return (
             <div className="map">
                 <YMaps query ={{
@@ -36,9 +41,8 @@ class MapCar extends React.Component< IProps, IState> {
                         onClick={this.onMapClick.bind(this)} >
                         <Placemark
                             geometry={this.props.coordinates}
-                            options= {{iconColor: "yellow"}}
+                            options= {{iconColor: this.props.userAddressErr ? "red" : "yellow"}}
                         />
-
                         {this.props.crewsList.map((car) => {
                             const geometry = [car.lat, car.lon];
                             return ( <Placemark
@@ -46,7 +50,6 @@ class MapCar extends React.Component< IProps, IState> {
                                 />
                             );
                         })}
-
                     </Map>
                 </YMaps>
             </div>
@@ -65,6 +68,5 @@ export default connect(
     (state: AppState) => ({
         coordinates: state.order.coordinates,
         crewsList: state.order.crewsList,
+        userAddressErr: state.order.userAddressErr,
     }), dispatchProps)(MapCar);
-
-// export default hot(module)(MapCar);

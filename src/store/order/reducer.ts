@@ -8,9 +8,10 @@ import {
   SET_CREWS_LIST,
   SET_ADDRESS_FROM_STR,
   SET_MAP,
+  SET_ADDRESS_ERR,
   SET_COORDINATES,
   SET_YANDEX_MAP,
-  SET_SELECTED_CAT
+  SET_SELECTED_CAT,
 } from "./constants";
 import {ICrewInfo, IOrderState, OrderAction} from "./types";
 
@@ -18,6 +19,7 @@ export const initialState: IOrderState = {
   coordinates: [],
   crewsList: [],
   userAddress: "",
+  userAddressErr: false,
   yandexMap: {},
   selectedCar: null,
 };
@@ -34,6 +36,12 @@ const orderReducer = (state: IOrderState = initialState, action: OrderAction) =>
       return {
         ...state,
         userAddress: action.payload,
+      };
+    },
+    case SET_ADDRESS_ERR: {
+      return {
+        ...state,
+        userAddressErr: action.payload,
       };
     },
     case SET_COORDINATES: {

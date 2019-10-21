@@ -30,13 +30,10 @@ class Wherefrom extends React.Component< IProps, IState> {
             this.state.hasError = true;
         }
     }
-
     public componentWillReceiveProps(props: IProps) {
         if (props.userAddress !== this.state.userAddress) {
             this.setState({userAddress: props.userAddress});
         }
-        // console.log("props change");
-        // console.log(props);
     }
 
     public validate(val: string): boolean {
