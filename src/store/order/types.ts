@@ -1,6 +1,10 @@
 import {ActionType} from "typesafe-actions";
 import * as orderActions from "./actions";
 
+export interface IRootState {
+    order: IOrderState;
+}
+
 export interface ICoordinates {
     lat: number;
     long: number;

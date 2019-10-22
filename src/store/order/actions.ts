@@ -10,7 +10,7 @@ import {
 } from "./constants";
 
 import {ThunkAction} from "redux-thunk";
-import {ICrewInfo, ISuitableCrewsResponse, RootActions, RootState, IOrder, IAddresses, ISearchCrews} from "./types";
+import {ICrewInfo,  IRootState, ISuitableCrewsResponse, RootActions, IOrder, IAddresses, ISearchCrews} from "./types";
 
 export const setYandexMap = (map: object) => action(SET_YANDEX_MAP, map);
 export const setCoordinates = (coordinates: any) => action(SET_COORDINATES, coordinates);
@@ -19,7 +19,7 @@ export const setAddressErr = (status: boolean) => action(SET_ADDRESS_ERR, status
 export const setCrewsList = (crewList: ICrewInfo[]) => action(SET_CREWS_LIST, crewList);
 export const setSelectedCar = (car: ICrewInfo) => action(SET_SELECTED_CAT, car);
 
-export const findUserByStr = (addr: string): ThunkAction<void, RootState, undefined, RootActions> => (
+export const findUserByStr = (addr: string): ThunkAction<void, IRootState, undefined, RootActions> => (
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {
@@ -36,7 +36,7 @@ export const findUserByStr = (addr: string): ThunkAction<void, RootState, undefi
     });
 };
 
-export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootState, undefined, RootActions> => (
+export const findUserByCoordinates = (coordinates: any): ThunkAction<void, IRootState, undefined, RootActions> => (
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {
@@ -60,7 +60,7 @@ export const findUserByCoordinates = (coordinates: any): ThunkAction<void, RootS
     });
 };
 
-export const searchCrews = (status: boolean = true): ThunkAction<void, RootState, undefined, RootActions> => async (
+export const searchCrews = (status: boolean = true): ThunkAction<void, IRootState, undefined, RootActions> => async (
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {
@@ -107,7 +107,7 @@ export const searchCrews = (status: boolean = true): ThunkAction<void, RootState
     }
 };
 
-export const validate = (): ThunkAction<void, RootState, undefined, RootActions> => (
+export const validate = (): ThunkAction<void, IRootState, undefined, RootActions> => (
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {
@@ -126,7 +126,7 @@ export const validate = (): ThunkAction<void, RootState, undefined, RootActions>
     }
 };
 
-export const send = (): ThunkAction<void, RootState, undefined, RootActions> => async (
+export const send = (): ThunkAction<void, IRootState, undefined, RootActions> => async (
     dispatch: Dispatch<RootActions>,
     getState: any,
 ) => {

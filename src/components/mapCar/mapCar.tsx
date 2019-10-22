@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { Map, Placemark, YMaps } from "react-yandex-maps";
 import {AppState} from "../../store/index";
 import { orderActions} from "../../store/order";
-import {ICrewInfo, OrderAction} from "../../store/order/types";
+import {ICrewInfo} from "../../store/order/types";
 
 interface IProps {
     coordinates: number[];
     crewsList: ICrewInfo[];
-    findUserByCoordinates: OrderAction;
-    setYandexMap: OrderAction;
+    findUserByCoordinates: any;
+    setYandexMap: any;
     userAddressErr: boolean;
 }
 

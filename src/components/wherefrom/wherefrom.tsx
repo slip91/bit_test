@@ -2,14 +2,13 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {AppState} from "../../store";
 import {orderActions} from "../../store/order";
-import {OrderAction} from "../../store/order/types";
 
 interface IProps {
-    findUserByStr: OrderAction;
-    userAddress: OrderAction;
-    validateAddr: OrderAction;
-    userAddressErr: OrderAction;
-    setAddress: OrderAction;
+    findUserByStr: any;
+    userAddress: string;
+    validateAddr: any;
+    userAddressErr: boolean;
+    setAddress: any;
 }
 
 // interface IState {}

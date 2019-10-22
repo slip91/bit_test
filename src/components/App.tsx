@@ -1,10 +1,9 @@
 import * as React from "react";
 import Button from "react-bootstrap/Button";
-import { hot } from "react-hot-loader";
 import {connect} from "react-redux";
 import {AppState} from "../store";
 import {orderActions} from "../store/order";
-import MapCar from "./mapCar/MapCar";
+import MapCar from "./mapCar/mapCar";
 import CarList from "./carList/carList";
 import Wherefrom from "./wherefrom/wherefrom";
 import SelectCar from "./selectCar/selectCar";
@@ -37,7 +36,7 @@ class App extends React.Component< IProps, IState> {
         }
     }
 
-    private render() {
+    render() {
         return (
             <div className="container">
                 <div className="row">
@@ -74,13 +73,11 @@ class App extends React.Component< IProps, IState> {
 }
 
 const dispatchProps = {
-    validate: orderActions.validate,
     sendOrder: orderActions.send,
+    validate: orderActions.validate,
 };
 
 export default connect(
     (state: AppState) => ({
         userAddressErr: state.order.userAddressErr,
     }), dispatchProps)(App);
-
-// export default App;

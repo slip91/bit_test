@@ -4,13 +4,13 @@ import {connect} from "react-redux";
 import {AppState} from "../../store";
 
 import {orderActions} from "../../store/order";
-import {ICrewInfo, OrderAction} from "../../store/order/types";
+import {ICrewInfo} from "../../store/order/types";
 
 const carLogo = require("./../../assets/img/sportive-car.svg");
 
 interface IProps {
     crewsList: ICrewInfo[];
-    setSelectedCar: OrderAction;
+    setSelectedCar: any;
     selectedCar: ICrewInfo;
 }
 
