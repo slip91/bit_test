@@ -1,10 +1,9 @@
 {
-  "name": "bit test",
+  "name": "bit_test",
   "version": "0.0.1",
-  "description": "----",
+  "description": "",
   "author": "",
   "license": "MIT",
-  "homepage": "",
   "scripts": {
     "build": "yarn run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
